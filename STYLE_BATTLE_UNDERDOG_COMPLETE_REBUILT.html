@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f8e8ef">
+<title>Style Battle: Underdog — Complete Edition</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#f6eaf0,#e8f6fb);color:#241f24;font-family:Arial,Helvetica,sans-serif}
+button{font:inherit}
+#app{max-width:980px;margin:auto;background:#fff;min-height:100vh}
+.screen{display:none;min-height:100vh;padding:18px}.active{display:block}
+.hero{display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(145deg,#fff1f6,#e7f7ff)}
+.heroBox{max-width:680px}.crown{font-size:70px}
+h1{font-size:clamp(42px,10vw,82px);line-height:.9;letter-spacing:-3px;color:#762b50;margin:10px 0}
+h2{margin:8px 0}p{line-height:1.55;color:#6c6269}
+.btn{border:0;border-radius:15px;padding:13px 19px;background:#d65c8c;color:#fff;font-weight:900;box-shadow:0 5px 0 #a73e68;margin:5px;cursor:pointer}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #a73e68}
+.alt{background:#f1e3e9;color:#51283b;box-shadow:none}
+.card{background:#fff;border:1px solid #eadce3;border-radius:23px;padding:18px;margin:12px 0;box-shadow:0 8px 30px #48243812}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;background:#fff;z-index:20;padding:8px 0}
+.pill{padding:8px 12px;background:#f5e7ed;border-radius:999px;font-size:12px;font-weight:900}
+.levels{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.level{border:2px solid #ecc2d4;background:#fff5f8;border-radius:18px;padding:17px;text-align:left;cursor:pointer}
+.level b{display:block}.level small{color:#766b72;line-height:1.4}.level.locked{opacity:.45;cursor:not-allowed}
+.story{background:#fff6d9;border:1px solid #efdca3;border-radius:18px;padding:13px;margin:10px 0}
+.story strong{display:block}.story p{margin:4px 0;font-size:13px}
+.arena{border-radius:25px;overflow:hidden;background:#e8f7ff;border:1px solid #d9e8ee}
+.stage{height:520px;position:relative;background:linear-gradient(#dff4ff 0 66%,#f2dfe6 66%)}
+.floor{position:absolute;bottom:0;width:100%;height:180px;background:repeating-linear-gradient(90deg,#f0d7df 0 65px,#f8e8ed 65px 130px)}
+.runway{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:220px;height:180px;background:#fff6f8;clip-path:polygon(22% 0,78% 0,100% 100%,0 100%);opacity:.7}
+.character{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);width:230px;height:470px}
+svg{width:100%;height:100%;display:block}
+.characterTag{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);background:#fff;padding:7px 12px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;box-shadow:0 4px 16px #0002}
+.opponents{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.op{background:#fff5f8;border-radius:18px;padding:9px;text-align:center;border:1px solid #ecdce3}.op strong{display:block}.mini{height:160px}
+.wardrobe{margin-top:10px;border:1px solid #eadde3;border-radius:22px;padding:12px;background:#fff}
+.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:9px}.tab{border:0;background:#f4ebef;padding:10px 14px;border-radius:999px;font-weight:900;white-space:nowrap}.tab.active{background:#ed9fbd}
+.items{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.item{border:2px solid transparent;border-radius:15px;background:#faf6f8;padding:8px;min-height:92px;text-align:center;cursor:pointer}.item.active{border-color:#d45b8b;background:#fff0f5}
+.swatch{height:42px;border-radius:11px;margin-bottom:6px;position:relative}.item b{font-size:11px}.item small{display:block;color:#766b72;font-size:9px;margin-top:3px}
+.finish{width:100%;margin-top:10px;background:#629871;box-shadow:none}
+.result{text-align:center}.score{font-size:74px;font-weight:1000;color:#c34f7c}.stars{font-size:30px;color:#d4a43a}
+@media(max-width:560px){.screen{padding:12px}.levels{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,1fr)}.stage{height:500px}.character{transform:translateX(-50%) scale(.9);transform-origin:bottom center}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section id="home" class="screen active hero">
+<div class="heroBox">
+<div class="crown">👑</div>
+<h1>STYLE<br>BATTLE</h1><h2>UNDERDOG</h2>
+<p>Three classmates. Ten challenges. One runway. Build the look, face the battle and prove the underdog belongs at the top.</p>
+<button class="btn" onclick="openLevels()">START THE BATTLE</button>
+<button class="btn alt" onclick="show('how')">HOW TO PLAY</button>
+</div>
+</section>
+
+<section id="how" class="screen">
+<div class="card"><h2>How to Play</h2>
+<div class="story"><strong>🎀 The story</strong><p>You are the underdog at school. Maya and Zara are the classmates everyone expects to win. Each challenge gives you a theme. Style your character before the timer runs out, then see who wins.</p></div>
+<p><b>Style every layer:</b> skin, makeup, hair, top, bottom, shoes and accessories.</p>
+<button class="btn" onclick="openLevels()">Choose Challenge</button><button class="btn alt" onclick="show('home')">Back</button>
+</div></section>
+
+<section id="levels" class="screen">
+<div class="topbar"><button class="btn alt" onclick="show('home')">← Home</button><span class="pill">⭐ <span id="stars">0</span></span></div>
+<div class="card"><h2>Choose a Challenge</h2><p>Win rounds to earn stars and unlock harder battles.</p></div>
+<div id="levelsGrid" class="levels"></div>
+</section>
+
+<section id="game" class="screen">
+<div class="topbar">
+<button class="btn alt" onclick="openLevels()">← Levels</button>
+<span class="pill">LEVEL <span id="levelNo">1</span></span>
+<span class="pill">⏱ <span id="timer">60</span>s</span>
+</div>
+<div class="story"><strong id="challengeName"></strong><p id="challengeDesc"></p></div>
+
+<div class="arena">
+<div class="stage">
+<div class="floor"></div><div class="runway"></div>
+
+<!-- MAIN FULL BODY CHARACTER: face, ears, neck, shoulders, arms, hands, torso, hips, legs and shoes -->
+<div class="character">
+<svg viewBox="0 0 230 470" aria-label="Full body fashion character">
+<defs>
+<linearGradient id="skinGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a96d4e"/><stop offset="1" stop-color="#7b4b37"/></linearGradient>
+<linearGradient id="dressGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efa7c0"/><stop offset="1" stop-color="#d77b9d"/></linearGradient>
+</defs>
+<ellipse cx="115" cy="456" rx="62" ry="10" fill="#60414b22"/>
+
+<!-- long hair behind head -->
+<path id="hairBack" d="M55 96C43 35 78 7 116 10C160 12 181 45 174 100L166 170H62Z" fill="#2c1714"/>
+<!-- ears -->
+<ellipse cx="63" cy="91" rx="11" ry="17" fill="url(#skinGrad)"/><ellipse cx="167" cy="91" rx="11" ry="17" fill="url(#skinGrad)"/>
+<!-- neck -->
+<path d="M98 137h34v42H98z" fill="url(#skinGrad)"/>
+<!-- face -->
+<path d="M67 63C72 28 101 17 121 20C149 23 164 44 160 82C156 120 137 145 115 149C92 145 73 122 69 89C67 79 66 70 67 63Z" fill="url(#skinGrad)"/>
+<!-- hair front -->
+<path id="hairFront" d="M61 72C57 39 80 17 113 18C146 18 168 41 161 74C143 55 84 50 61 72Z" fill="#2c1714"/>
+<!-- brows -->
+<path d="M82 77Q92 71 101 77M127 77Q138 71 148 77" fill="none" stroke="#42271f" stroke-width="4" stroke-linecap="round"/>
+<!-- eyes -->
+<ellipse cx="93" cy="88" rx="5" ry="7" fill="#211a1a"/><ellipse cx="140" cy="88" rx="5" ry="7" fill="#211a1a"/>
+<circle cx="94" cy="86" r="1.5" fill="#fff"/><circle cx="141" cy="86" r="1.5" fill="#fff"/>
+<!-- makeup layers -->
+<ellipse id="blushL" cx="80" cy="108" rx="10" ry="5" fill="#dc7187" opacity=".25"/>
+<ellipse id="blushR" cx="151" cy="108" rx="10" ry="5" fill="#dc7187" opacity=".25"/>
+<path id="eyeliner" d="M84 87Q93 80 102 87M131 87Q140 80 149 87" fill="none" stroke="#2c1720" stroke-width="2" opacity=".8"/>
+<!-- nose -->
+<path d="M115 91Q111 108 117 111Q122 113 125 109" fill="none" stroke="#663c2f" stroke-width="2" stroke-linecap="round"/>
+<!-- lips -->
+<path id="lips" d="M105 124Q115 118 125 124Q115 136 105 124Z" fill="#8d3f55"/>
+<!-- earrings -->
+<g id="earrings"><circle cx="63" cy="109" r="4" fill="#d6ab49"/><circle cx="167" cy="109" r="4" fill="#d6ab49"/></g>
+
+<!-- shoulders -->
+<path d="M92 168Q115 157 138 168L159 180L146 210H84L71 180Z" fill="url(#dressGrad)"/>
+<!-- arms -->
+<path id="armL" d="M76 177Q63 180 59 199L48 277Q47 290 58 293Q68 294 70 281L81 211L90 191Z" fill="url(#skinGrad)"/>
+<path id="armR" d="M154 177Q167 180 171 199L182 277Q183 290 172 293Q162 294 160 281L149 211L140 191Z" fill="url(#skinGrad)"/>
+<!-- hands/fingers -->
+<g fill="url(#skinGrad)">
+<path d="M48 275q-7 7-3 16l5 9q3 5 8 2l-3-11 6 10q4 4 7 0l-4-12 7 8q4 2 5-3l-7-13z"/>
+<path d="M182 275q7 7 3 16l-5 9q-3 5-8 2l3-11-6 10q-4 4-7 0l4-12-7 8q-4 2-5-3l7-13z"/>
+</g>
+
+<!-- top / shirt -->
+<path id="topLayer" d="M91 167L115 190L139 167Q153 169 162 181L150 245Q115 257 80 245L68 181Q77 169 91 167Z" fill="#e9a0bb"/>
+<!-- necklace -->
+<path id="necklace" d="M94 166Q115 198 136 166" fill="none" stroke="#d7ae51" stroke-width="3"/>
+<circle id="pendant" cx="115" cy="194" r="5" fill="#d7ae51"/>
+
+<!-- hips and bottom -->
+<path id="bottomLayer" d="M81 239Q115 251 149 239L170 319Q115 340 60 319Z" fill="#648dc4"/>
+<!-- legs -->
+<path d="M83 312L110 316L105 406L77 406Z" fill="url(#skinGrad)"/>
+<path d="M120 316L147 312L153 406L125 406Z" fill="url(#skinGrad)"/>
+<!-- knees -->
+<ellipse cx="92" cy="366" rx="12" ry="7" fill="#704330" opacity=".2"/><ellipse cx="139" cy="366" rx="12" ry="7" fill="#704330" opacity=".2"/>
+<!-- shoes -->
+<path id="shoeL" d="M73 397Q91 390 107 401L109 421Q89 431 67 417Q66 405 73 397Z" fill="#30262b"/>
+<path id="shoeR" d="M124 401Q141 390 156 399Q166 407 160 420Q141 431 124 421Z" fill="#30262b"/>
+
+<!-- accessory -->
+<g id="accessory"></g>
+</svg>
+<div class="characterTag" id="outfitLabel">Pink Top · Blue Skirt</div>
+</div>
+</div>
+</div>
+
+<div class="opponents">
+<div class="op"><strong>Maya · Trendsetter</strong><div class="mini">
+<svg viewBox="0 0 150 160">
+<ellipse cx="75" cy="154" rx="35" ry="5" fill="#0002"/>
+<path d="M45 50C38 15 58 4 77 5C103 7 116 28 110 55L104 80H47Z" fill="#261714"/>
+<path d="M53 31Q75 16 96 31V70Q90 88 75 91Q60 88 53 70Z" fill="#9d6548"/>
+<circle cx="65" cy="50" r="3" fill="#201719"/><circle cx="86" cy="50" r="3" fill="#201719"/>
+<path d="M68 65Q75 70 82 65" fill="none" stroke="#793b4d" stroke-width="3"/>
+<path d="M51 86Q75 77 99 86L110 132Q75 143 40 132Z" fill="#7c61ad"/>
+<path d="M50 128L70 134L67 154H48Z" fill="#9d6548"/><path d="M80 134L100 128L103 154H84Z" fill="#9d6548"/>
+</svg></div></div>
+<div class="op"><strong>Zara · Fashion Favorite</strong><div class="mini">
+<svg viewBox="0 0 150 160">
+<ellipse cx="75" cy="154" rx="35" ry="5" fill="#0002"/>
+<path d="M42 53C34 14 58 3 77 5C105 7 119 30 111 58L104 81H45Z" fill="#45271d"/>
+<path d="M53 31Q75 16 96 31V70Q90 88 75 91Q60 88 53 70Z" fill="#b57956"/>
+<circle cx="65" cy="50" r="3" fill="#201719"/><circle cx="86" cy="50" r="3" fill="#201719"/>
+<path d="M67 65Q75 70 83 65" fill="none" stroke="#793b4d" stroke-width="3"/>
+<path d="M51 86Q75 77 99 86L110 132Q75 143 40 132Z" fill="#d66c87"/>
+<path d="M50 128L70 134L67 154H48Z" fill="#b57956"/><path d="M80 134L100 128L103 154H84Z" fill="#b57956"/>
+</svg></div></div>
+</div>
+
+<div class="wardrobe">
+<div class="tabs" id="tabs"></div>
+<div class="items" id="items"></div>
+<button class="btn finish" onclick="finishRound()">FINISH LOOK ✨</button>
+</div>
+</section>
+
+<section id="result" class="screen">
+<div class="card" style="text-align:center">
+<div style="font-size:64px" id="resultIcon">🏆</div>
+<h1 style="font-size:44px" id="resultTitle">YOU WON!</h1>
+<div class="score" id="score">0</div><div class="stars" id="resultStars">☆☆☆</div>
+<p id="resultText"></p>
+<button class="btn" onclick="openLevels()">NEXT CHALLENGE</button>
+<button class="btn alt" onclick="show('home')">HOME</button>
+</div>
+</section>
+</div>
+
+<script>
+const challenges=[
+["First Day","Make a confident first impression.",["top:White Blouse","bottom:Blue Pleated Skirt","shoes:White Sneakers"]],
+["Birthday Party","Fun, bright and camera-ready.",["top:Sparkle Top","bottom:Pink Party Skirt","shoes:Gold Heels","accessories:Star Earrings"]],
+["Beach Day","Light, relaxed and playful.",["top:Sky Crop Top","bottom:Denim Shorts","shoes:White Sneakers"]],
+["School Dance","Memorable evening style.",["top:Black Evening Top","bottom:Silver Skirt","shoes:Gold Heels","hair:Long Waves"]],
+["Dream Interview","Polished, capable and professional.",["top:White Blouse","bottom:Black Pencil Skirt","shoes:Black Loafers","hair:Low Bun"]],
+["Cultural Festival","Bold colour with a coordinated finish.",["top:Red Statement Top","bottom:Gold Skirt","accessories:Gold Hoops"]],
+["Celebrity Event","Red-carpet confidence.",["top:Red Carpet Top","bottom:Silver Skirt","shoes:Gold Heels","hair:Long Waves"]],
+["Mystery Challenge","Elegant, dark and dramatic.",["top:Black Evening Top","bottom:Black Pencil Skirt","shoes:Black Loafers","hair:Long Waves"]],
+["Date Night","Elegant, confident and effortless.",["top:Pink Blazer","bottom:Black Pencil Skirt","shoes:Gold Heels","accessories:Pink Necklace"]],
+["Grand Finale","The underdog's biggest battle.",["top:Red Carpet Top","bottom:Gold Skirt","shoes:Gold Heels","hair:Long Waves","accessories:Gold Hoops"]]
+];
+
+const wardrobe={
+skin:[["Warm Cocoa","#70422f"],["Golden Brown","#a96d4e"],["Deep Brown","#563125"]],
+makeup:[["Natural","#d65f76"],["Soft Glam","#c54672"],["Bold Lip","#8e304d"]],
+top:[["Pink Blazer","#e9a0bb"],["Sparkle Top","#b76bd1"],["Sky Crop Top","#73c7e7"],["Black Evening Top","#28252b"],["White Blouse","#f7f4ed"],["Red Statement Top","#c84e5b"],["Red Carpet Top","#97253d"]],
+bottom:[["Blue Pleated Skirt","#648dc4"],["Pink Party Skirt","#e28ab0"],["Denim Shorts","#578aae"],["Silver Skirt","#bfc4ce"],["Black Pencil Skirt","#29272c"],["Gold Skirt","#d7aa3d"]],
+shoes:[["White Sneakers","#f5f4ef"],["Gold Heels","#d6a83d"],["Black Loafers","#29252b"]],
+hair:[["Soft Bob","#2c1714"],["Long Waves","#3b2019"],["High Pony","#241410"],["Braids","#4a2920"],["Honey Curls","#70402b"],["Low Bun","#281714"]],
+accessories:[["None","#eee"],["Gold Hoops","#d7ae51"],["Star Earrings","#ffd45b"],["Pink Necklace","#e98bad"],["Sunglasses","#28252b"],["Hair Bow","#e98bad"]]
+};
+const cats=["skin","makeup","top","bottom","shoes","hair","accessories"];
+let level=0,cat="skin",time=60,timer=null,stars=0,selected={};
+
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");scrollTo(0,0)}
+function openLevels(){clearInterval(timer);renderLevels();show("levels")}
+function renderLevels(){
+const g=document.getElementById("levelsGrid");g.innerHTML="";
+for(let i=0;i<10;i++){const locked=i>0&&stars<i*2;const b=document.createElement("button");b.className="level"+(locked?" locked":"");b.disabled=locked;b.innerHTML="<b>"+(locked?"🔒 ":"")+"LEVEL "+(i+1)+"</b><br>"+challenges[i][0]+"<br><small>"+(locked?"Earn "+(i*2)+" stars to unlock":"Tap to play")+"</small>";b.onclick=()=>start(i);g.appendChild(b)}
+document.getElementById("stars").textContent=stars
+}
+function start(i){
+level=i;cat="skin";time=60;selected={};
+document.getElementById("levelNo").textContent=i+1;
+document.getElementById("challengeName").textContent=challenges[i][0];
+document.getElementById("challengeDesc").textContent=challenges[i][1];
+document.getElementById("timer").textContent=time;
+renderTabs();renderItems();resetCharacter();show("game");
+clearInterval(timer);timer=setInterval(()=>{time--;document.getElementById("timer").textContent=time;if(time<=0)finishRound(true)},1000)
+}
+function renderTabs(){let t=document.getElementById("tabs");t.innerHTML="";cats.forEach(c=>{let b=document.createElement("button");b.className="tab"+(c===cat?" active":"");b.textContent=c[0].toUpperCase()+c.slice(1);b.onclick=()=>{cat=c;renderTabs();renderItems()};t.appendChild(b)})}
+function renderItems(){let box=document.getElementById("items");box.innerHTML="";wardrobe[cat].forEach((it,i)=>{let b=document.createElement("button");b.className="item"+(selected[cat]===it[0]?" active":"");b.innerHTML="<div class='swatch' style='background:"+it[1]+"'></div><b>"+it[0]+"</b><small>Tap to wear</small>";b.onclick=()=>{selected[cat]=it[0];apply(cat,it);renderItems()};box.appendChild(b)})}
+function resetCharacter(){
+apply("skin",wardrobe.skin[1]);apply("makeup",wardrobe.makeup[0]);apply("top",wardrobe.top[0]);apply("bottom",wardrobe.bottom[0]);apply("shoes",wardrobe.shoes[0]);apply("hair",wardrobe.hair[0]);apply("accessories",wardrobe.accessories[0]);
+document.getElementById("outfitLabel").textContent="Pink Blazer · Blue Pleated Skirt";
+}
+function apply(c,it){
+const v=it[1];
+if(c==="skin"){document.getElementById("hairBack").setAttribute("data-skin","");document.querySelectorAll(".character svg [fill='url(#skinGrad)']").forEach(x=>x.setAttribute("fill",v))}
+if(c==="makeup"){document.getElementById("blushL").setAttribute("fill",v);document.getElementById("blushR").setAttribute("fill",v);document.getElementById("lips").setAttribute("fill",v)}
+if(c==="top")document.getElementById("topLayer").setAttribute("fill",v);
+if(c==="bottom")document.getElementById("bottomLayer").setAttribute("fill",v);
+if(c==="shoes"){document.getElementById("shoeL").setAttribute("fill",v);document.getElementById("shoeR").setAttribute("fill",v)}
+if(c==="hair"){document.getElementById("hairBack").setAttribute("fill",v);document.getElementById("hairFront").setAttribute("fill",v);hairShape(it[0])}
+if(c==="accessories")accessory(it[0],v);
+if(c==="top"||c==="bottom")document.getElementById("outfitLabel").textContent=(selected.top||"Pink Blazer")+" · "+(selected.bottom||"Blue Pleated Skirt")
+}
+function hairShape(name){
+let back=document.getElementById("hairBack"),front=document.getElementById("hairFront");
+if(name==="Long Waves"){back.setAttribute("d","M48 102C35 35 77 5 116 8C164 10 188 48 177 111L170 205H59Z")}
+else if(name==="High Pony"){back.setAttribute("d","M54 96C42 37 78 8 115 10C156 12 176 40 171 85Q205 58 213 91Q212 124 169 129L166 172H62Z")}
+else if(name==="Braids"){back.setAttribute("d","M54 94C44 34 79 7 116 10C160 12 181 43 173 99L166 196L151 210L143 130L132 210L116 132L104 211L90 199L83 126L68 195Z")}
+else if(name==="Honey Curls"){back.setAttribute("d","M50 105C39 42 78 5 116 8C164 10 185 48 176 112L166 190H61Z")}
+else if(name==="Low Bun"){back.setAttribute("d","M58 96C47 39 80 9 116 10C154 11 176 39 169 86Q199 72 201 101Q197 126 166 122L166 170H61Z")}
+else{back.setAttribute("d","M55 96C43 35 78 7 116 10C160 12 181 45 174 100L166 170H62Z")}
+}
+function accessory(name,color){
+let g=document.getElementById("accessory");g.innerHTML="";
+if(name==="Gold Hoops")g.innerHTML="<circle cx='63' cy='109' r='9' fill='none' stroke='"+color+"' stroke-width='4'/><circle cx='167' cy='109' r='9' fill='none' stroke='"+color+"' stroke-width='4'/>";
+if(name==="Star Earrings")g.innerHTML="<text x='55' y='116' font-size='18'>★</text><text x='158' y='116' font-size='18'>★</text>";
+if(name==="Pink Necklace")g.innerHTML="<path d='M94 166Q115 202 136 166' fill='none' stroke='"+color+"' stroke-width='4'/><circle cx='115' cy='198' r='6' fill='"+color+"'/>";
+if(name==="Sunglasses")g.innerHTML="<g fill='none' stroke='#29252b' stroke-width='5'><rect x='78' y='78' width='32' height='20' rx='7'/><rect x='120' y='78' width='32' height='20' rx='7'/><path d='M110 84h10M78 84l-10-5M152 84l10-5'/></g>";
+if(name==="Hair Bow")g.innerHTML="<path d='M158 40Q185 23 184 49Q181 66 158 58Q135 66 133 49Q132 23 158 40Z' fill='"+color+"'/><circle cx='158' cy='49' r='7' fill='#bd4d78'/>";
+}
+function finishRound(auto=false){
+clearInterval(timer);
+let score=35;let good=challenges[level][2];
+good.forEach(x=>{let p=x.split(":");if(selected[p[0]]===p[1])score+=13});
+score+=Math.min(10,Math.floor(time/6));
+if(Object.keys(selected).length>=5)score+=8;
+score=Math.min(100,score);
+let opponent1=60+Math.floor(Math.random()*25),opponent2=58+Math.floor(Math.random()*28),win=score>=Math.max(opponent1,opponent2);
+if(win)stars+=2;
+document.getElementById("score").textContent=score;
+document.getElementById("resultStars").textContent=win?"★★★":"★☆☆";
+document.getElementById("resultIcon").textContent=win?"🏆":"💪";
+document.getElementById("resultTitle").textContent=win?"YOU WON!":"NOT THIS TIME";
+document.getElementById("resultText").textContent=win?"You beat Maya and Zara in "+challenges[level][0]+". The underdog is climbing.":"Maya and Zara edged ahead this round. Change the look and battle again.";
+show("result")
+}
+renderLevels();
+</script>
+</body>
+</html>
