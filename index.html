@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Style Battle: Underdog</title>
+<style>
+:root{--bg:#fff7f1;--ink:#2b2020;--pink:#e85d8f;--gold:#f5b942;--card:#fff;--muted:#806f70;--good:#3a9d67;--bad:#d85a5a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff7f1,#f9e9f2);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0}.app{max-width:900px;margin:auto;min-height:100vh;padding:18px 14px 30px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.logo{font-weight:900;font-size:22px}.coins{background:#fff;border:1px solid #f0d8df;padding:8px 12px;border-radius:999px;font-weight:800}
+.screen{display:none}.screen.active{display:block}.hero{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 12px 35px #6b405218}.hero h1{font-size:clamp(34px,8vw,64px);line-height:.95;margin:0 0 12px}.hero p{color:var(--muted);font-size:17px}.primary{background:var(--pink);color:white;padding:14px 22px;border-radius:16px;font-weight:900;box-shadow:0 7px 0 #b93d6b}.primary:active{transform:translateY(3px);box-shadow:0 4px 0 #b93d6b}
+.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.level{background:#fff;padding:18px;border-radius:20px;border:2px solid transparent;text-align:left}.level.locked{opacity:.45}.level:not(.locked):hover{border-color:var(--pink)}.badge{display:inline-block;background:#ffe5ef;color:#b83f6c;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800}
+.game-top{background:#fff;border-radius:22px;padding:15px;margin-bottom:12px}.toprow{display:flex;justify-content:space-between;gap:10px;align-items:center}.theme{font-size:24px;font-weight:900}.timer{font-size:24px;font-weight:900;color:var(--pink)}.bar{height:8px;background:#f2e4e7;border-radius:99px;overflow:hidden;margin-top:10px}.fill{height:100%;background:var(--pink);width:100%;transition:width .2s}
+.game{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}.stage,.wardrobe{background:#fff;border-radius:24px;padding:15px}.stage{min-height:560px;position:relative;overflow:hidden;background:linear-gradient(#dff4ff 0 55%,#f7d9df 55%)}.stage:after{content:"";position:absolute;inset:auto 0 0;height:45%;background:repeating-linear-gradient(90deg,#f6cfd7 0 40px,#fbe6ea 40px 80px);opacity:.55}
+.character{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);width:180px;height:430px;z-index:2}.hair{position:absolute;left:38px;top:18px;width:104px;height:105px;border-radius:50% 50% 42% 42%;background:#3a211a;z-index:3}.face{position:absolute;left:58px;top:43px;width:64px;height:76px;border-radius:48% 48% 45% 45%;background:#8f5d43;z-index:4}.face:before,.face:after{content:"";position:absolute;top:34px;width:7px;height:7px;background:#251918;border-radius:50%}.face:before{left:16px}.face:after{right:16px}.acne{position:absolute;inset:10px;border-radius:50%;background:radial-gradient(circle at 20% 35%,#d85a5a 0 2px,transparent 3px),radial-gradient(circle at 72% 48%,#d85a5a 0 2px,transparent 3px),radial-gradient(circle at 45% 72%,#d85a5a 0 2px,transparent 3px);opacity:.75}.neck{position:absolute;left:79px;top:105px;width:22px;height:30px;background:#8f5d43;z-index:2}.body{position:absolute;left:36px;top:125px;width:108px;height:170px;border-radius:38px 38px 20px 20px;background:#f0b4c5;z-index:2}.body.slim{width:88px;left:46px}.legs{position:absolute;left:53px;top:280px;width:30px;height:135px;background:#8f5d43;border-radius:18px;box-shadow:43px 0 #8f5d43;z-index:1}.shoes{position:absolute;left:46px;top:395px;width:45px;height:22px;background:#2b2020;border-radius:15px;box-shadow:48px 0 #2b2020;z-index:2}.outfit-label{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;background:#fff;padding:7px 11px;border-radius:99px;font-size:12px;font-weight:800}
+.category{display:flex;gap:7px;overflow:auto;padding-bottom:8px}.cat{background:#f7edf0;padding:9px 12px;border-radius:12px;font-weight:800;white-space:nowrap}.cat.active{background:#ffd9e6;color:#a93360}.items{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.item{background:#faf7f7;border:2px solid transparent;border-radius:14px;padding:8px;text-align:center}.item.selected{border-color:var(--pink);background:#fff0f5}.swatch{height:55px;border-radius:10px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:28px}.item small{font-weight:700}.finish{width:100%;margin-top:12px;background:#2b2020;color:#fff;padding:14px;border-radius:15px;font-weight:900}.scorebox{text-align:center;background:#fff;border-radius:25px;padding:28px}.score{font-size:64px;font-weight:1000;color:var(--pink)}.result-row{display:flex;justify-content:space-between;padding:11px;border-bottom:1px solid #f0e5e5}.notice{background:#fff4c8;padding:12px;border-radius:14px;margin:12px 0;font-weight:700}
+@media(max-width:700px){.game{grid-template-columns:1fr}.stage{min-height:500px}.items{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">✨ Style Battle</div><div class="coins">🪙 <span id="coins">120</span></div></header>
+
+<section id="home" class="screen active">
+<div class="hero">
+<span class="badge">THE UNDERDOG STORY</span>
+<h1>Prove them wrong.</h1>
+<p>Build the perfect look, beat the rivals, and climb from the school hallway to the ultimate fashion battle.</p>
+<button class="primary" onclick="showLevels()">Start playing →</button>
+</div>
+</section>
+
+<section id="levels" class="screen">
+<h2>Choose a challenge</h2><p id="progressText"></p><div id="levelGrid" class="level-grid"></div>
+</section>
+
+<section id="gameScreen" class="screen">
+<div class="game-top"><div class="toprow"><div><div class="badge" id="levelBadge"></div><div class="theme" id="theme"></div></div><div class="timer">⏱ <span id="timer">45</span>s</div></div><div class="bar"><div id="timerFill" class="fill"></div></div><div class="notice" id="clue"></div></div>
+<div class="game">
+<div class="stage">
+<div class="character">
+<div class="hair" id="charHair"></div><div class="face"><div class="acne" id="acne"></div></div><div class="neck"></div>
+<div class="body" id="charBody"></div><div class="legs"></div><div class="shoes" id="charShoes"></div>
+<div class="outfit-label" id="outfitLabel">School uniform</div>
+</div></div>
+<div class="wardrobe">
+<div class="category" id="categories"></div>
+<div class="items" id="items"></div>
+<button class="finish" onclick="finishLevel()">✨ Finish outfit</button>
+</div>
+</div>
+</section>
+
+<section id="result" class="screen">
+<div class="scorebox"><div class="badge" id="resultBadge"></div><h2 id="resultTitle"></h2><div class="score" id="score"></div><div id="resultRows"></div><p id="resultMessage"></p><button class="primary" onclick="nextAfterResult()">Continue →</button></div>
+</section>
+</div>
+
+<script>
+const levels=[
+{name:"First Day",theme:"First Day of School",clue:"Look polished, comfortable and confident. Your rivals are going for classic school style.",time:45,goal:60},
+{name:"Birthday",theme:"Birthday Party",clue:"It's your best friend's birthday. Pick something fun without looking overdressed.",time:50,goal:62},
+{name:"Beach",theme:"Beach Day",clue:"Sun, sand and photos. Think light, playful and practical.",time:45,goal:65},
+{name:"School Dance",theme:"School Dance",clue:"Tonight is the big dance. Glamorous is good—but coordination matters.",time:55,goal:68},
+{name:"Interview",theme:"Dream Internship Interview",clue:"First impressions count. Choose professional pieces and keep it sharp.",time:50,goal:70},
+{name:"Cultural Festival",theme:"Cultural Festival",clue:"Celebrate culture with color, detail and a respectful statement look.",time:55,goal:72},
+{name:"Celebrity Event",theme:"Celebrity Event",clue:"The cameras are waiting. Go bold, sophisticated and unforgettable.",time:50,goal:75},
+{name:"Mystery",theme:"Mystery Challenge",clue:"Three clues: evening • photographs • elegance. Figure out the vibe.",time:42,goal:78},
+{name:"Rival's Revenge",theme:"Rival's Revenge",clue:"Your strongest rival copied your favorite style. Out-style her with creativity.",time:38,goal:80},
+{name:"Grand Finale",theme:"Grand Fashion Battle",clue:"Three rounds in spirit: make one look that can survive any spotlight.",time:35,goal:84}
+];
+const data={
+tops:[["Blush Tee","🌸","#f2a7bd"],["Sky Blouse","🩵","#a9d9ed"],["Gold Top","✨","#e7c35d"],["Black Jacket","🖤","#292525"],["White Shirt","🤍","#f5f3f1"],["Green Knit","🌿","#77a889"]],
+bottoms:[["Pleated Skirt","👗","#e5b4c7"],["Wide Jeans","👖","#6b8fb7"],["Black Pants","🖤","#292525"],["Flowy Skirt","🌷","#d891a7"],["Shorts","🩳","#8fb6c8"],["Gold Skirt","✨","#d7ad43"]],
+shoes:[["Sneakers","👟","#f4f0ed"],["Heels","👠","#c85f84"],["Boots","🥾","#4a3029"],["Sandals","🩴","#d9b287"],["Platform","👟","#8b6b86"],["Loafers","👞","#5b3d30"]],
+hair:[["Natural Curls","🌀","#3b231b"],["High Puff","☁️","#3b231b"],["Braids","〰️","#261815"],["Sleek Bob","💇🏽‍♀️","#241916"],["Long Waves","〰️","#4a291e"],["Headwrap","🧕🏽","#b36a79"]],
+accessories:[["Hoops","⭕","#d7ad43"],["Pearl Set","🤍","#eee"],["Sunglasses","🕶️","#292525"],["Gold Chain","📿","#d7ad43"],["Scarf","🧣","#c66f7f"],["Mini Bag","👜","#8d5b4c"]],
+makeup:[["Fresh","✨","#f2c4c7"],["Gloss","💋","#d86b86"],["Soft Glam","💄","#a84e64"],["Bold","🔥","#8d304e"],["No Makeup","🌿","#d8a28e"],["Festival","🎨","#8b7bb3"]]
+};
+let current=0, timeLeft=45, interval=null, coins=120, selections={tops:0,bottoms:0,shoes:0,hair:0,accessories:0,makeup:0};
+let unlocked=1;
+
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function showLevels(){renderLevels();show('levels')}
+function renderLevels(){const g=document.getElementById('levelGrid');g.innerHTML='';document.getElementById('progressText').textContent=`${Math.min(unlocked,10)} of 10 challenges unlocked`;
+levels.forEach((l,i)=>{const b=document.createElement('button');b.className='level '+(i>=unlocked?'locked':'');b.innerHTML=`<span class="badge">LEVEL ${i+1}</span><h3>${i+1}. ${l.theme}</h3><small>${i<unlocked?'▶ Play':'🔒 Locked'}</small>`;if(i<unlocked)b.onclick=()=>startLevel(i);g.appendChild(b)})}
+function startLevel(i){current=i;selections={tops:0,bottoms:0,shoes:0,hair:0,accessories:0,makeup:0};const l=levels[i];timeLeft=l.time;document.getElementById('levelBadge').textContent=`LEVEL ${i+1}`;document.getElementById('theme').textContent=l.theme;document.getElementById('clue').textContent='💡 '+l.clue;document.getElementById('timer').textContent=timeLeft;document.getElementById('timerFill').style.width='100%';renderCategories();renderItems('tops');applyLook();show('gameScreen');clearInterval(interval);interval=setInterval(tick,1000)}
+function tick(){timeLeft--;document.getElementById('timer').textContent=timeLeft;document.getElementById('timerFill').style.width=(timeLeft/levels[current].time*100)+'%';if(timeLeft<=0){clearInterval(interval);finishLevel(true)}}
+function renderCategories(){const c=document.getElementById('categories');c.innerHTML='';Object.keys(data).forEach((key,i)=>{const b=document.createElement('button');b.className='cat '+(i===0?'active':'');b.textContent=key[0].toUpperCase()+key.slice(1);b.onclick=()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderItems(key)};c.appendChild(b)})}
+function renderItems(key){const box=document.getElementById('items');box.innerHTML='';data[key].forEach((it,i)=>{const b=document.createElement('button');b.className='item '+(selections[key]===i?'selected':'');b.innerHTML=`<div class="swatch" style="background:${it[2]}">${it[1]}</div><small>${it[0]}</small>`;b.onclick=()=>{selections[key]=i;renderItems(key);applyLook()};box.appendChild(b)})}
+function applyLook(){const top=data.tops[selections.tops], bottom=data.bottoms[selections.bottoms], shoe=data.shoes[selections.shoes], hair=data.hair[selections.hair];
+document.getElementById('charBody').style.background=top[2];document.getElementById('charShoes').style.background=shoe[2];document.getElementById('charHair').style.background=hair[2];document.getElementById('outfitLabel').textContent=top[0]+' + '+bottom[0]}
+function finishLevel(timed=false){if(interval)clearInterval(interval);let l=levels[current], score=35;const names=Object.values(selections);
+score += new Set(names).size*5;
+if(current>=3) score+=selections.accessories!==0?4:0;
+if(current>=4) score+=selections.shoes>=2?5:0;
+if(current===2) score+=selections.shoes===3?7:0;
+if(current===4) score+=(selections.tops===3||selections.tops===4)?7:0;
+if(current===7) score+=(selections.makeup===2||selections.makeup===3)?8:0;
+if(current===8) score+=selections.accessories>=2?7:0;
+score += Math.min(10,Math.floor(timeLeft/5)); if(timed)score-=8; score=Math.max(0,Math.min(100,score));
+const won=score>=l.goal; if(won){coins+=25+current*5;unlocked=Math.max(unlocked,Math.min(10,current+2))}else{coins+=5}
+document.getElementById('coins').textContent=coins;document.getElementById('resultBadge').textContent=won?'🏆 VICTORY':'💪 TRY AGAIN';document.getElementById('resultTitle').textContent=won?'You beat the rival!':'The rival won this round';document.getElementById('score').textContent=score+'/100';
+document.getElementById('resultRows').innerHTML=`<div class="result-row"><span>Theme match</span><b>${Math.min(25,15+current*2)}/25</b></div><div class="result-row"><span>Creativity</span><b>${Math.min(25,12+new Set(names).size*2)}/25</b></div><div class="result-row"><span>Styling</span><b>${Math.min(25,14+selections.accessories*2)}/25</b></div><div class="result-row"><span>Time bonus</span><b>${Math.min(25,Math.floor(timeLeft/2))}/25</b></div>`;
+document.getElementById('resultMessage').textContent=won?`You earned coins and unlocked more challenges. Next level gets tougher.`:`You're close. Try a different combination and watch the theme clues.`;
+show('result')}
+function nextAfterResult(){if(current+1<10 && unlocked>current+1)startLevel(current+1);else showLevels()}
+</script>
+</body>
+</html>
